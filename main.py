@@ -1,9 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import  ImageTk, Image  
+from PIL import  ImageTk, Image 
+from dbconnection import DAO 
 from functools import partial
+
 import hashlib
-  
+# re module provides support
+# for regular expressions
+import re 
  
 LARGEFONT =("Verdana", 35)
   
@@ -107,10 +111,13 @@ class LoginPage(tk.Frame):
         connexion_text.set("Register")
         connexion_btn.grid(column=1,row=7)
     
-    def login(self, username, password, controller):
-        print("username entered :", username.get())
+    def login(self, email, password, controller):
+        print("email entered :", email.get())
         print("password entered :", password.get())
-        controller.show_frame(HomePage)
+        dao = DAO()
+        result=dao.login(email, password)
+        if(result) :
+            controller.show_frame(HomePage)
     
     def register(self, controller):
         controller.show_frame(RegisterPage)
@@ -173,10 +180,30 @@ class RegisterPage(tk.Frame):
     
     def register(self, email, username, password, confirmPassword, controller):
         print("username entered :", username.get())
+
         print("email enterd:", email.get())
         print("password entered :", password.get())
         print("confirmpassword entered :", confirmPassword.get())
-        controller.show_frame(LoginPage)
+        
+        # Make a regular expression
+        # for validating an Email
+        emailregex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if(not(re.fullmatch(emailregex, email.get()))):
+            print("inValid Email")
+            raise Exception("inValid Email Format")
+        
+        passwordregex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+        if(not(re.fullmatch(passwordregex, password.get()))):
+            print("inValid password")
+            raise Exception("inValid Password Format")
+        if((password.get()!= confirmPassword.get())):
+            print("inValid password confirmation")
+            raise Exception("inValid Password confirmation")
+        
+        dao = DAO()
+        result = dao.register(username.get(), username.get(), email.get(), password.get())
+        if(result):
+            controller.show_frame(LoginPage)
   
         
   
