@@ -83,7 +83,3 @@ class DAO :
             
 
 
-dao =  DAO("az")
-#dao.createTable()
-#dao.register("souheil" ,"prenom", "email", "password ")
-dao.login( "email", "password")
