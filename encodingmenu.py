@@ -27,7 +27,7 @@ class EncodingMenu(tk.Frame):
 
         #Decoding button
         menu2_text = tk.StringVar()
-        menu2_btn = tk.Button(self, command=lambda : print("1") , textvariable=menu2_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
+        menu2_btn = tk.Button(self, command=lambda : controller.show_frame(9), textvariable=menu2_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
         menu2_text.set("Decoding a message")
         menu2_btn.grid(column=1,row=1)
 

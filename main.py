@@ -7,6 +7,7 @@ import twilio
 
 from functools import partial
 
+from decodepage import DecodePage
 from encodepage import EncodePage
 from homepage import HomePage
 from loginpage import LoginPage
@@ -48,7 +49,7 @@ class tkinterApp(tk.Tk):
         self.resizable(False, False)
 
         # initializing frames to an empty array
-        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu, HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu, EncodePage]
+        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu, HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu, EncodePage,DecodePage]
 
         # iterating through a tuple consisting
         # of the different page layouts
