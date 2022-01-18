@@ -67,7 +67,8 @@ class DAO :
                 query =("select * from users where email ='%s'"%(email))
                 c.execute(query)
                 records = c.fetchall()
-                
+                print(c.rowcount)
+                print(email)
                 if c.rowcount== 0 : 
                     print("user doesn't exist")
                 else :
