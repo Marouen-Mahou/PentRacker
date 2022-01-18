@@ -15,7 +15,7 @@ class HashingMenu(tk.Frame):
         canvas.configure(background='black')
         canvas.grid(columnspan=3, rowspan=5)
 
-        #Login
+        #Name of the page
         menuText = tk.Label(self, text="Hash")
         menuText.config(font=("Anonymous Pro", 30))
         menuText.config(fg="#FFFFFF")
@@ -29,24 +29,25 @@ class HashingMenu(tk.Frame):
         T.grid(row=1, column=1)
 
 
+        #output text
         output_text = tk.Label(self, text="Output :",bg="black",fg="#57B947",font=("Anonymous Pro", 12))
         output_text.grid(row=3, column=0)
         output = tk.Label(self,relief='flat', text="",bg="black",fg="#57B947",font=("Anonymous Pro", 12))
         output.grid(row=3, column=1)
 
-        #Coding button
+        #MD5 button
         menu1_text = tk.StringVar()
         menu1_btn = tk.Button(self, command=lambda : self.hash(T, output, output_text, "MD5") , textvariable=menu1_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 10)
         menu1_text.set("MD5")
         menu1_btn.grid(column=0,row=2)
 
-        #Decoding button
+        #SHA button
         menu2_text = tk.StringVar()
         menu2_btn = tk.Button(self, command=lambda : self.hash(T, output, output_text, "SHA1") , textvariable=menu2_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 10)
         menu2_text.set("SHA1")
         menu2_btn.grid(column=1,row=2)
 
-        #Decoding button
+        #SHA 256 button
         menu3_text = tk.StringVar()
         menu3_btn = tk.Button(self, command=lambda : self.hash(T, output, output_text, "SHA256") , textvariable=menu3_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 10)
         menu3_text.set("SHA256")
