@@ -2,10 +2,14 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import  ImageTk, Image
+import base64
+from Crypto.cipher import DES
+
+import hashlib
+
 
 
 class SymEncryptingMenu(tk.Frame):
-
     def __init__(self, parent, controller):
 
         tk.Frame.__init__(self, parent)
@@ -14,41 +18,51 @@ class SymEncryptingMenu(tk.Frame):
 
         canvas = tk.Canvas(self, width=900, height=500)
         canvas.configure(background='black')
-        canvas.grid(columnspan=2, rowspan=4)
+        canvas.grid(columnspan=3, rowspan=5)
 
-        #Login
-        menuText = tk.Label(self, text="Symetric")
+
+        menuText = tk.Label(self, text="DES Encrypting")
         menuText.config(font=("Anonymous Pro", 30))
         menuText.config(fg="#FFFFFF")
         menuText.config(bg="black")
-        menuText.grid(columnspan=2, row=0)
+        menuText.grid(columnspan=3, row=0)
 
-        #Coding button
-        menu1_text = tk.StringVar()
-        menu1_btn = tk.Button(self, command=lambda : print("1") , textvariable=menu1_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
-        menu1_text.set("Encrypt DES")
-        menu1_btn.grid(column=0,row=1)
+        #message
+        tk.Label(self, text="Message :", bg="black", fg="#57B947", font=("Anonymous Pro", 12)).grid(row=1, column=0)
+        message = tk.Text(self, height=5, width=52, font=("Anonymous Pro", 12), bg="black", fg="#57B947",
+                    insertbackground="#57B947")
+        message.grid(row=1, column=1)
 
-        #Decoding button
-        menu2_text = tk.StringVar()
-        menu2_btn = tk.Button(self, command=lambda : print("1") , textvariable=menu2_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
-        menu2_text.set("Encrypt AES256")
-        menu2_btn.grid(column=1,row=1)
+        output_text = tk.Label(self, text="Output :", bg="black", fg="#57B947", font=("Anonymous Pro", 12))
+        output_text.grid(row=3, column=0)
+        output = tk.Label(self, relief='flat', text="", bg="black", fg="#57B947", font=("Anonymous Pro", 12))
+        output.grid(row=3, column=1)
 
-        #Decoding button
+        # key
+        tk.Label(self, text="key :", bg="black", fg="#57B947", font=("Anonymous Pro", 12)).grid(row=2, column=0)
+        key = tk.Text(self, height=2, width=52, font=("Anonymous Pro", 12), bg="black", fg="#57B947",
+                    insertbackground="#57B947")
+        key.grid(row=2, column=1)
+
+
+        # Encryption button
         menu3_text = tk.StringVar()
-        menu3_btn = tk.Button(self, command=lambda : print("1") , textvariable=menu3_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
-        menu3_text.set("Decrypt DES")
-        menu3_btn.grid(column=0,row=2)
+        menu3_btn = tk.Button(self, command=lambda: print(message.get("1.0", "end-1c")), textvariable=menu3_text,
+                              font=("Anonymous Pro", 14), bg="#57B947", fg="black", width=10)
+        menu3_text.set("Encrypt")
+        menu3_btn.grid(column=2, row=2)
 
-        #Decoding button
-        menu4_text = tk.StringVar()
-        menu4_btn = tk.Button(self, command=lambda : print("1") , textvariable=menu4_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
-        menu4_text.set("Decrypt AES256")
-        menu4_btn.grid(column=1,row=2)
-
-        #Quit button
+        # Quit button
         quit_text = tk.StringVar()
-        quit_btn = tk.Button(self, command=lambda : controller.show_frame(2), textvariable=quit_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 20)
+        quit_btn = tk.Button(self, command=lambda: controller.show_frame(3), textvariable=quit_text,
+                             font=("Anonymous Pro", 14), bg="#57B947", fg="black", width=20)
         quit_text.set("Return")
-        quit_btn.grid(columnspan=2,row=3)
+        quit_btn.grid(columnspan=3, row=4)
+
+    def encrypt(self, message, key,):
+        cipher = DES.new(key, DES.MODE_EAX)
+        nonce = cipher.nonce
+        ciphertext, tag = cipher.encrypt_and_digest(message.encode('ascii'))
+        print(nonce)
+        print(ciphertext)
+        print(tag)
