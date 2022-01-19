@@ -48,24 +48,29 @@ class RegisterPage(tk.Frame):
         tk.Label(self, text="User Name :",bg="black",fg="#57B947",font=("Anonymous Pro", 12)).grid(row=4, column=1)
         username = tk.StringVar()
         tk.Entry(self, textvariable=username,font=("Anonymous Pro", 12), bg="black",fg="#57B947", insertbackground="#57B947").grid(row=5, column=1)
+        # phone
+        tk.Label(self, text="Phone Number :", bg="black", fg="#57B947", font=("Anonymous Pro", 12)).grid(row=6, column=1)
+        phone = tk.StringVar()
+        tk.Entry(self, textvariable=phone, font=("Anonymous Pro", 12), bg="black", fg="#57B947",
+                 insertbackground="#57B947").grid(row=7, column=1)
 
         #password label and password entry box
-        tk.Label(self,text="Password :",bg="black",fg="#57B947",font=("Anonymous Pro", 12)).grid(row=6, column=1)
+        tk.Label(self,text="Password :",bg="black",fg="#57B947",font=("Anonymous Pro", 12)).grid(row=8, column=1)
         password = tk.StringVar()
-        tk.Entry(self, textvariable=password, show='*',font=("Anonymous Pro", 12), bg="black",fg="#57B947",insertbackground="#57B947").grid(row=7, column=1)
+        tk.Entry(self, textvariable=password, show='*',font=("Anonymous Pro", 12), bg="black",fg="#57B947",insertbackground="#57B947").grid(row=9, column=1)
 
         #password label and password entry box
-        tk.Label(self,text="Confirm Password :",bg="black",fg="#57B947",font=("Anonymous Pro", 12)).grid(row=8, column=1)
+        tk.Label(self,text="Confirm Password :",bg="black",fg="#57B947",font=("Anonymous Pro", 12)).grid(row=10, column=1)
         confirmPassword = tk.StringVar()
-        tk.Entry(self, textvariable=confirmPassword, show='*',font=("Anonymous Pro", 12), bg="black",fg="#57B947",insertbackground="#57B947").grid(row=9, column=1)
+        tk.Entry(self, textvariable=confirmPassword, show='*',font=("Anonymous Pro", 12), bg="black",fg="#57B947",insertbackground="#57B947").grid(row=11, column=1)
 
         #button
         connexion_text = tk.StringVar()
-        connexion_btn = tk.Button(self, command=lambda : self.register(email,username, password, confirmPassword, controller) , textvariable=connexion_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black")
+        connexion_btn = tk.Button(self, command=lambda : self.register(email,username, password, confirmPassword,phone, controller) , textvariable=connexion_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black")
         connexion_text.set("Register")
-        connexion_btn.grid(column=1,row=10)
+        connexion_btn.grid(column=1,row=12)
 
-    def register(self, email, username, password, confirmPassword, controller):
+    def register(self, email, username, password, confirmPassword,phone, controller):
         print("username entered :", username.get())
 
         print("email enterd:", email.get())
@@ -88,7 +93,7 @@ class RegisterPage(tk.Frame):
             raise Exception("inValid Password confirmation")
 
         dao = DAO()
-        result = dao.register(username.get(), username.get(), email.get(), password.get())
+        result = dao.register(username.get(), username.get(), email.get(), password.get(),phone.get())
         if(result):
             self.grid_forget()
             #controller.show_frame(LoginPage)

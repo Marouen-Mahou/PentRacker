@@ -1,6 +1,8 @@
+import random
 import tkinter as tk
 from PIL import ImageTk, Image
-
+from mail import send_email
+from sms import send_verif
 from dbconnection import DAO
 from homepage import HomePage
 from registerpage import RegisterPage
@@ -10,7 +12,7 @@ class LoginPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg="black")
-        self.parent=parent
+        self.parent = parent
 
         canvas = tk.Canvas(self, width=900, height=500)
         canvas.configure(background='black')
@@ -34,7 +36,7 @@ class LoginPage(tk.Frame):
         loginText.grid(column=1, row=1)
 
         # username
-        tk.Label(self, text="User Name :", bg="black", fg="#57B947", font=("Anonymous Pro", 12)).grid(row=2, column=1)
+        tk.Label(self, text="email :", bg="black", fg="#57B947", font=("Anonymous Pro", 12)).grid(row=2, column=1)
         username = tk.StringVar()
         tk.Entry(self, textvariable=username, font=("Anonymous Pro", 12), bg="black", fg="#57B947",
                  insertbackground="#57B947").grid(row=3, column=1)
@@ -63,13 +65,18 @@ class LoginPage(tk.Frame):
         print("email entered :", email.get())
         print("password entered :", password.get())
         dao = DAO()
-        #result = dao.login(email.get(), password.get())
-        #if (result):
-        #    print("hello")
+        result = dao.login(email.get(), password.get())
+        user = dao.getuser(email.get())
+        print(user[3])
+        if (result):
+            print("hello")
+            code = random.choice(range(100000, 999999))
+            dao.update_verifcode(email.get(),code)
+            send_email(code,user[3]
+                       )
+            send_verif(code,user[4])
 
-        controller.show_frame(2)
+            controller.show_frame(10)
 
     def register(self, controller):
         controller.show_frame(1)
-
-

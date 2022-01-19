@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import  ImageTk, Image
+
 from dbconnection import DAO
 
 import twilio
@@ -11,6 +12,7 @@ from decodepage import DecodePage
 from encodepage import EncodePage
 from homepage import HomePage
 from loginpage import LoginPage
+from doubleFA import DoubleFA
 import hashlib
 # re module provides support
 # for regular expressions
@@ -49,7 +51,7 @@ class tkinterApp(tk.Tk):
         self.resizable(False, False)
 
         # initializing frames to an empty array
-        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu, HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu, EncodePage,DecodePage]
+        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu, HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu, EncodePage,DecodePage,DoubleFA]
 
         # iterating through a tuple consisting
         # of the different page layouts
