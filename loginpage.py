@@ -72,9 +72,8 @@ class LoginPage(tk.Frame):
             print("hello")
             code = random.choice(range(100000, 999999))
             dao.update_verifcode(email.get(),code)
-            send_email(code,user[3]
-                       )
-            send_verif(code,user[4])
+            send_email(code, user[3])
+            send_verif(code, user[4])
 
             controller.show_frame(10)
 

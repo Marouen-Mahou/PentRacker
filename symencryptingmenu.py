@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import  ImageTk, Image
 import base64
-from Crypto.cipher import DES
 
 import hashlib
 
@@ -59,10 +58,3 @@ class SymEncryptingMenu(tk.Frame):
         quit_text.set("Return")
         quit_btn.grid(columnspan=3, row=4)
 
-    def encrypt(self, message, key,):
-        cipher = DES.new(key, DES.MODE_EAX)
-        nonce = cipher.nonce
-        ciphertext, tag = cipher.encrypt_and_digest(message.encode('ascii'))
-        print(nonce)
-        print(ciphertext)
-        print(tag)
