@@ -18,10 +18,10 @@ class RegisterPage(tk.Frame):
 
         canvas = tk.Canvas(self, width=900, height=500)
         canvas.configure(background='black')
-        canvas.grid(columnspan=3, rowspan=11)
+        canvas.grid(columnspan=3, rowspan=14)
 
         image = Image.open("logo.png")
-        image = image. resize((100, 100), Image. ANTIALIAS)
+        image = image. resize((80, 80), Image. ANTIALIAS)
         image1 = ImageTk.PhotoImage(image)
 
         label = tk.Label(self, image=image1)
@@ -64,13 +64,17 @@ class RegisterPage(tk.Frame):
         confirmPassword = tk.StringVar()
         tk.Entry(self, textvariable=confirmPassword, show='*',font=("Anonymous Pro", 12), bg="black",fg="#57B947",insertbackground="#57B947").grid(row=11, column=1)
 
+        # Error text
+        error_label = tk.Label(self, bg="black", fg="#660000", font=("Anonymous Pro", 12))
+        error_label.grid(row=12, column=1)
+
         #button
         connexion_text = tk.StringVar()
-        connexion_btn = tk.Button(self, command=lambda : self.register(email,username, password, confirmPassword,phone, controller) , textvariable=connexion_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black")
+        connexion_btn = tk.Button(self, command=lambda : self.register(email,username, password, confirmPassword,phone, controller, error_label) , textvariable=connexion_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black")
         connexion_text.set("Register")
-        connexion_btn.grid(column=1,row=12)
+        connexion_btn.grid(column=1,row=13)
 
-    def register(self, email, username, password, confirmPassword,phone, controller):
+    def register(self, email, username, password, confirmPassword,phone, controller, error_label):
         print("username entered :", username.get())
 
         print("email enterd:", email.get())
@@ -82,18 +86,30 @@ class RegisterPage(tk.Frame):
         emailregex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         if(not(re.fullmatch(emailregex, email.get()))):
             print("inValid Email")
-            raise Exception("inValid Email Format")
+            error_label.config(text="Invalid Email Format")
+            return
+
+        phoneregex = "^\d{8}$"
+        if (not (re.fullmatch(phoneregex, phone.get()))):
+            print("inValid phone number")
+            error_label.config(text="Invalid phone number")
+            return
 
         passwordregex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
         if(not(re.fullmatch(passwordregex, password.get()))):
             print("inValid password")
-            raise Exception("inValid Password Format")
+            error_label.config(text="Invalid Password Format")
+            return
         if((password.get()!= confirmPassword.get())):
             print("inValid password confirmation")
-            raise Exception("inValid Password confirmation")
+            error_label.config(text="Invalid Password Confirmation")
+            return
 
-        dao = DAO()
-        result = dao.register(username.get(), username.get(), email.get(), password.get(),phone.get())
-        if(result):
-            self.grid_forget()
-            #controller.show_frame(LoginPage)
+        try:
+            dao = DAO()
+            result = dao.register(username.get(), username.get(), email.get(), password.get(),phone.get())
+            if(result):
+                self.grid_forget()
+                controller.show_frame(0)
+        except Exception as e:
+            error_label.config(text=e)

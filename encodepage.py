@@ -29,7 +29,7 @@ class EncodePage(tk.Frame):
 
         output_text = tk.Label(self, text="Output :", bg="black", fg="#57B947", font=("Anonymous Pro", 12))
         output_text.grid(row=3, column=0)
-        output = tk.Label(self, relief='flat', text="", bg="black", fg="#57B947", font=("Anonymous Pro", 12))
+        output = tk.Text(self, height=2, width=52, relief='flat', bg="black", fg="#57B947", font=("Anonymous Pro", 12))
         output.grid(row=3, column=1)
 
         # Coding button
@@ -66,14 +66,17 @@ class EncodePage(tk.Frame):
         if (type == "64"):
             out_text.config(text="Base 64 :")
             output = base64.b64encode(message.encode()).decode()
-            out.config(text=output)
+            out.delete(1.0,"end")
+            out.insert(1.0,output)
 
         if (type == "16"):
             out_text.config(text="Base 16 :")
             output = base64.b16encode(message.encode()).decode()
-            out.config(text=output)
+            out.delete(1.0, "end")
+            out.insert(1.0, output)
 
         if (type == "32"):
             out_text.config(text="Base 32 :")
             output = base64.b32encode(message.encode()).decode()
-            out.config(text=output)
+            out.delete(1.0, "end")
+            out.insert(1.0, output)

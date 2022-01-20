@@ -32,7 +32,7 @@ class HashingMenu(tk.Frame):
         #output text
         output_text = tk.Label(self, text="Output :",bg="black",fg="#57B947",font=("Anonymous Pro", 12))
         output_text.grid(row=3, column=0)
-        output = tk.Label(self,relief='flat', text="",bg="black",fg="#57B947",font=("Anonymous Pro", 12))
+        output = tk.Text(self, height=2, width=52, relief='flat', bg="black", fg="#57B947", font=("Anonymous Pro", 12))
         output.grid(row=3, column=1)
 
         #MD5 button
@@ -68,17 +68,20 @@ class HashingMenu(tk.Frame):
         if (type == "MD5"):
             out_text.config(text = "MD5 :")
             hash_object = hashlib.md5(bytes(message, encoding='utf-8'))
-            out.config(text = hash_object.hexdigest())
+            out.delete(1.0, "end")
+            out.insert(1.0, hash_object.hexdigest())
 
         if (type == "SHA1"):
             out_text.config(text = "SHA1 :")
             hash_object = hashlib.sha1(bytes(message, encoding='utf-8'))
-            out.config(text = hash_object.hexdigest())
+            out.delete(1.0, "end")
+            out.insert(1.0, hash_object.hexdigest())
 
         if (type == "SHA256"):
             out_text.config(text = "SHA256 :")
             hash_object = hashlib.sha256(bytes(message, encoding='utf-8'))
-            out.config(text = hash_object.hexdigest())
+            out.delete(1.0, "end")
+            out.insert(1.0, hash_object.hexdigest())
 
 
 

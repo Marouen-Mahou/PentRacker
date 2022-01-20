@@ -79,7 +79,7 @@ class tkinterApp(tk.Tk):
 
 
 
-        self.show_frame(0)
+        self.show_frame(3)
 
     # to display the current frame passed as
     # parameter

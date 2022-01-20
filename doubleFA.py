@@ -14,7 +14,7 @@ class DoubleFA(tk.Frame):
 
         canvas = tk.Canvas(self, width=900, height=500)
         canvas.configure(background='black')
-        canvas.grid(columnspan=3, rowspan=8)
+        canvas.grid(columnspan=3, rowspan=9)
 
         image = Image.open("logo.png")
         image = image.resize((150, 150), Image.ANTIALIAS)
@@ -35,7 +35,7 @@ class DoubleFA(tk.Frame):
 
         # hint
         hintText = tk.Label(self, text="your verification code has been sent to your email and your phone")
-        hintText.config(font=("Anonymous Pro", 20))
+        hintText.config(font=("Anonymous Pro", 15))
         hintText.config(fg="#FFFFFF")
         hintText.config(bg="black")
         hintText.grid(column=1, row=1)
@@ -51,27 +51,32 @@ class DoubleFA(tk.Frame):
         tk.Entry(self, textvariable=code, font=("Anonymous Pro", 12), bg="black", fg="#57B947",
                  insertbackground="#57B947").grid(row=5, column=1)
 
+        # Error text
+        error_label = tk.Label(self, bg="black", fg="#660000", font=("Anonymous Pro", 12))
+        error_label.grid(row=6, column=1)
+
         # button
         verif_text = tk.StringVar()
-        verif_btn = tk.Button(self, command=lambda: self.verify(email,code, controller),
+        verif_btn = tk.Button(self, command=lambda: self.verify(email,code, controller, error_label),
                                   textvariable=verif_text, font=("Anonymous Pro", 14), bg="#57B947", fg="black")
         verif_text.set("Verify")
-        verif_btn.grid(column=1, row=6)
+        verif_btn.grid(column=1, row=7)
 
         # button
         connexion_text = tk.StringVar()
-        connexion_btn = tk.Button(self, command=lambda: self.register(controller), textvariable=connexion_text,
+        connexion_btn = tk.Button(self, command=lambda: controller.show_frame(0), textvariable=connexion_text,
                                   font=("Anonymous Pro", 14), bg="#57B947", fg="black")
         connexion_text.set("Return")
-        connexion_btn.grid(column=1, row=7)
+        connexion_btn.grid(column=1, row=8)
 
-    def verify(self,email,code , controller):
-
+    def verify(self,email,code , controller, error_label):
         dao = DAO()
-        result = dao.verify_code(email.get(), code.get())
-        if (result):
-            print("hello")
-            controller.show_frame(2)
+        try:
+            result = dao.verify_code(email.get(), code.get())
+            if (result):
+                controller.show_frame(2)
+        except Exception as e:
+            error_label.config(text=e)
 
 
 

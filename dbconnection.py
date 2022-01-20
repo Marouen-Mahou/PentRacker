@@ -86,6 +86,7 @@ class DAO:
             print(email)
             if c.rowcount == 0:
                 print("user doesn't exist")
+                raise Exception("User doesn't exist")
             else:
                 for row in records:
                     hashedPassword = row[5]
@@ -96,6 +97,8 @@ class DAO:
                     return True
                 else:
                     print("false credential")
+                    raise Exception("False Credentials")
+
 
     def getuser(self, email,):
         with self.db.cursor() as c:
@@ -123,7 +126,8 @@ class DAO:
             print(c.rowcount)
             print(email)
             if c.rowcount == 0:
-                print("user doesn't exist")
+                print("User doesn't exist")
+                raise Exception("User doesn't exist")
             else:
                 for row in records:
                     oldcode = row[6]
@@ -132,7 +136,8 @@ class DAO:
                     print("verification done")
                     return True
                 else:
-                    print("not verified")
+                    print("Not verified")
+                    raise Exception("Not verified")
 
     def add_message(self, nom, message):
         with self.db.cursor() as c:

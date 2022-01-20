@@ -30,7 +30,7 @@ class DecodePage(tk.Frame):
 
         output_text = tk.Label(self, text="Output :", bg="black", fg="#57B947", font=("Anonymous Pro", 12))
         output_text.grid(row=3, column=0)
-        output = tk.Label(self, relief='flat', text="", bg="black", fg="#57B947", font=("Anonymous Pro", 12))
+        output = tk.Text(self, height=2, width=52, relief='flat', bg="black", fg="#57B947", font=("Anonymous Pro", 12))
         output.grid(row=3, column=1)
 
         # Coding button
@@ -64,17 +64,25 @@ class DecodePage(tk.Frame):
     def decode(self, input, out, out_text, type):
         message = input.get("1.0", "end-1c")
 
-        if (type == "64"):
-            out_text.config(text="Base 64 :")
-            output = base64.b64decode(message.encode('ascii')).decode('ascii')
-            out.config(text=output)
+        try:
+            if (type == "64"):
+                out_text.config(text="Base 64 :")
+                output = base64.b64decode(message.encode('ascii')).decode('ascii')
+                out.delete(1.0, "end")
+                out.insert(1.0, output)
 
-        if (type == "16"):
-            out_text.config(text="Base 16 :")
-            output = base64.b16decode(message.encode('ascii')).decode('ascii')
-            out.config(text=output)
+            if (type == "16"):
+                out_text.config(text="Base 16 :")
+                output = base64.b16decode(message.encode('ascii')).decode('ascii')
+                out.delete(1.0, "end")
+                out.insert(1.0, output)
 
-        if (type == "32"):
-            out_text.config(text="Base 32 :")
-            output = base64.b32decode(message.encode('ascii')).decode('ascii')
-            out.config(text=output)
+            if (type == "32"):
+                out_text.config(text="Base 32 :")
+                output = base64.b32decode(message.encode('ascii')).decode('ascii')
+                out.delete(1.0, "end")
+                out.insert(1.0, output)
+        except Exception as e:
+            print(e)
+            out.delete(1.0, "end")
+            out.insert(1.0,"Invalid Base of text")
