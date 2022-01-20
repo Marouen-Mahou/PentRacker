@@ -15,7 +15,7 @@ class DecodePage(tk.Frame):
         canvas.grid(columnspan=3, rowspan=5)
 
         # Login
-        menuText = tk.Label(self, text="Encode")
+        menuText = tk.Label(self, text="Decode")
         menuText.config(font=("Anonymous Pro", 30))
         menuText.config(fg="#FFFFFF")
         menuText.config(bg="black")
@@ -42,16 +42,16 @@ class DecodePage(tk.Frame):
 
         # Decoding button
         menu2_text = tk.StringVar()
-        menu2_btn = tk.Button(self, command=lambda: self.decode(T, output, output_text, "16"), textvariable=menu2_text,
+        menu2_btn = tk.Button(self, command=lambda: self.decode(T, output, output_text, "32"), textvariable=menu2_text,
                               font=("Anonymous Pro", 14), bg="#57B947", fg="black", width=10)
-        menu2_text.set("Base 16")
+        menu2_text.set("Base 32")
         menu2_btn.grid(column=1, row=2)
 
         # Decoding button
         menu3_text = tk.StringVar()
-        menu3_btn = tk.Button(self, command=lambda: self.decode(T, output, output_text, "8"), textvariable=menu3_text,
+        menu3_btn = tk.Button(self, command=lambda: self.decode(T, output, output_text, "16"), textvariable=menu3_text,
                               font=("Anonymous Pro", 14), bg="#57B947", fg="black", width=10)
-        menu3_text.set("Base 8")
+        menu3_text.set("Base 16")
         menu3_btn.grid(column=2, row=2)
 
         # Quit button
@@ -70,11 +70,11 @@ class DecodePage(tk.Frame):
             out.config(text=output)
 
         if (type == "16"):
-            out_text.config(text="SHA1 :")
-            hash_object = hashlib.sha1(bytes(message, encoding='utf-8'))
-            out.config(text=hash_object.hexdigest())
+            out_text.config(text="Base 16 :")
+            output = base64.b16decode(message.encode('ascii')).decode('ascii')
+            out.config(text=output)
 
-        if (type == "8"):
-            out_text.config(text="SHA256 :")
-            hash_object = hashlib.sha256(bytes(message, encoding='utf-8'))
-            out.config(text=hash_object.hexdigest())
+        if (type == "32"):
+            out_text.config(text="Base 32 :")
+            output = base64.b32decode(message.encode('ascii')).decode('ascii')
+            out.config(text=output)
