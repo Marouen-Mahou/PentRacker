@@ -1,4 +1,4 @@
-import mysql.connector
+import pymysql.cursors
 import hashlib
 
 
@@ -11,7 +11,7 @@ class DataBaseConnection:
 
     def getConnection(host, user, password, database):
         if DataBaseConnection.__shared_instance is None:
-            DataBaseConnection.__shared_instance = mysql.connector.connect(host=host, user=user, password=password,
+            DataBaseConnection.__shared_instance = pymysql.connect(host=host, user=user, password=password,
                                                                            database=database)
         return DataBaseConnection.__shared_instance
 
