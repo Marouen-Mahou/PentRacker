@@ -8,7 +8,10 @@ from functools import partial
 
 from decodepage import DecodePage
 from encodepage import EncodePage
+from encryptingaes import EncryptingAES
 from homepage import HomePage
+from rsa import EncDecRsa
+from gamal import EncDecGAMAL
 from loginpage import LoginPage
 from doubleFA import DoubleFA
 import hashlib
@@ -21,7 +24,7 @@ from hashingmenu import HashingMenu
 from symencryptingmenu import SymEncryptingMenu
 from encryptingdes import EncryptingDES
 from decryptingdes import DecryptingDES
-from encryptingaes import EncryptingAES
+
 from decryptingaes import DecryptingAES
 
 from asymencryptingmenu import AsymEncryptingMenu
@@ -59,7 +62,8 @@ class tkinterApp(tk.Tk):
         self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu,
                        HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu,
                        EncodePage,DecodePage,DoubleFA, EncryptingDES,
-                       DecryptingDES, EncryptingAES, DecryptingAES, SecretChat
+                       DecryptingDES, EncryptingAES, DecryptingAES, SecretChat,
+                       EncDecRsa,EncDecGAMAL
                        ]
 
         # iterating through a tuple consisting
