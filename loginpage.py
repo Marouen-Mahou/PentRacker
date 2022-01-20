@@ -79,15 +79,12 @@ class LoginPage(tk.Frame):
                 dao.update_verifcode(email.get(),code)
                 send_email(code, user[3])
                 send_verif(code, user[4])
+                controller.set_email(user[3])
                 controller.show_frame(10)
         except Exception as e:
             print("exception")
             print(e)
             error_label.config(text=e)
-
-
-
-
 
     def register(self, controller):
         controller.show_frame(1)

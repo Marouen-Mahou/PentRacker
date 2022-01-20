@@ -15,7 +15,7 @@ class SecretChat(tk.Frame):
 
         canvas = tk.Canvas(self, width=900, height=500)
         canvas.configure(background='black')
-        canvas.grid(columnspan=3, rowspan=5)
+        canvas.grid(columnspan=3, rowspan=6)
 
         menuText = tk.Label(self, text="Secure Chat")
         menuText.config(font=("Anonymous Pro", 30))
@@ -40,7 +40,7 @@ class SecretChat(tk.Frame):
 
         # Encryption button
         menu3_text = tk.StringVar()
-        menu3_btn = tk.Button(self, command=lambda: self.sendMessage(message,room),
+        menu3_btn = tk.Button(self, command=lambda: self.sendMessage(message,room, controller),
                               textvariable=menu3_text,
                               font=("Anonymous Pro", 14), bg="#57B947", fg="black",
                               width=10)
@@ -52,17 +52,20 @@ class SecretChat(tk.Frame):
         quit_btn = tk.Button(self, command=lambda: controller.show_frame(2), textvariable=quit_text,
                              font=("Anonymous Pro", 14), bg="#57B947", fg="black", width=20)
         quit_text.set("Return")
-        quit_btn.grid(columnspan=3, row=4)
+        quit_btn.grid(columnspan=3, row=5)
 
-    def sendMessage(self, input,room):
+    def sendMessage(self, input,room, controller):
+        print(controller.get_email())
         text = input.get("1.0", "end-1c")
         encrypted = self.encrypt(text, "ssi")
-        DAO().add_message(DAO().get_active_user(), encrypted)
+        DAO().add_message(DAO().getuser(controller.get_email())[1], encrypted)
         input.delete(1.0,"end")
         room.delete(1.0,"end")
         self.fillMessages(room)
 
     def fillMessages(self, room):
+        print("fill messages")
+        room.delete(1.0, "end")
         records = DAO().get_messages()
         for row in records:
             decrypted_message = self.decrypt(row[2], "ssi")
