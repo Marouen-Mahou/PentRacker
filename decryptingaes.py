@@ -3,11 +3,11 @@ import tkinter as tk
 import hashlib
 import base64
 
-from Crypto.Cipher import DES3, DES
+from Crypto.Cipher import AES
 from Crypto import Random
 
 
-class EncryptingDES(tk.Frame):
+class DecryptingAES(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -17,7 +17,7 @@ class EncryptingDES(tk.Frame):
         canvas.configure(background='black')
         canvas.grid(columnspan=3, rowspan=5)
 
-        menuText = tk.Label(self, text="DES Encrypting 1")
+        menuText = tk.Label(self, text="AES Decrypting")
         menuText.config(font=("Anonymous Pro", 30))
         menuText.config(fg="#FFFFFF")
         menuText.config(bg="black")
@@ -56,18 +56,18 @@ class EncryptingDES(tk.Frame):
         quit_text.set("Return")
         quit_btn.grid(columnspan=3, row=4)
 
-    def encrypt(self,output, message, key):
-        key = key.encode('ascii')
-        if len(key) < 16:
-            key = key + str.encode((16 - len(key)) * '\x00')
-        m = hashlib.md5(key)
-        key = m.digest()
-        (dk, iv) = (key[:8], key[8:])
-        cipher = DES.new(dk, DES.MODE_CBC, iv)
-        message += '\x00' * (8 - len(message) % 8)
-        ciphertext = cipher.encrypt(message.encode('ascii'))
-        encode_string = base64.b32encode(ciphertext)
+    def encrypt(self, output, message, key):
+        message = base64.b64decode(message)
+        iv = message[:AES.block_size]
+        key = hashlib.sha256(key.encode()).digest()
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        plain_text = self._unpad(cipher.decrypt(message[AES.block_size:])).decode('utf-8')
         output.delete(1.0, "end")
-        output.insert(1.0, encode_string)
+        output.insert(1.0, plain_text)
 
+    def _pad(self, s):
+        return s + (AES.block_size - len(s) % AES.block_size) * chr(AES.block_size - len(s) % AES.block_size)
 
+    @staticmethod
+    def _unpad(s):
+        return s[:-ord(s[len(s)-1:])]

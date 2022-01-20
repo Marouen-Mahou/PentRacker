@@ -4,8 +4,6 @@ from PIL import  ImageTk, Image
 
 from dbconnection import DAO
 
-import twilio
-
 from functools import partial
 
 from decodepage import DecodePage
@@ -21,9 +19,16 @@ import re
 from encodingmenu import EncodingMenu
 from hashingmenu import HashingMenu
 from symencryptingmenu import SymEncryptingMenu
+from encryptingdes import EncryptingDES
+from decryptingdes import DecryptingDES
+from encryptingaes import EncryptingAES
+from decryptingaes import DecryptingAES
+
 from asymencryptingmenu import AsymEncryptingMenu
 from crackingmenu import CrackingMenu
 from registerpage import RegisterPage
+
+from secretchat import SecretChat
 
 LARGEFONT =("Verdana", 35)
 
@@ -51,7 +56,11 @@ class tkinterApp(tk.Tk):
         self.resizable(False, False)
 
         # initializing frames to an empty array
-        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu, HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu, EncodePage,DecodePage,DoubleFA]
+        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu,
+                       HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu,
+                       EncodePage,DecodePage,DoubleFA, EncryptingDES,
+                       DecryptingDES, EncryptingAES, DecryptingAES, SecretChat
+                       ]
 
         # iterating through a tuple consisting
         # of the different page layouts

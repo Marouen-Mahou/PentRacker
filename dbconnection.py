@@ -39,6 +39,20 @@ class DAO:
             c.execute(
                 "create table users (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL , prenom  varchar(50),email varchar(50) NOT NULL UNIQUE ,numero varchar(8) NOT NULL , password varchar(256) NOT NULL ,  code varchar(6) NOT NULL );"
             )
+
+            c.execute(
+                "create table messages (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL , message varchar(150) NOT NULL );"
+            )
+
+            c.execute(
+                "create active messages (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL );"
+            )
+
+            c.execute(
+                "INSERT INTO `active`(`nom`) VALUES('nouser');"
+            )
+
+
         self.db.commit()
 
     def register(self, nom, prenom, email, password, phone):
@@ -78,6 +92,7 @@ class DAO:
 
                 if (hashedPassword == hash_object.hexdigest()):
                     print("login done")
+                    self.set_active_user(row[1])
                     return True
                 else:
                     print("false credential")
@@ -118,3 +133,38 @@ class DAO:
                     return True
                 else:
                     print("not verified")
+
+    def add_message(self, nom, message):
+        with self.db.cursor() as c:
+            query = ('insert into messages(nom,message) values ( "%s" , "%s" )' % (
+                nom, message.decode("utf-8")))
+            print(query)
+            c.execute(query)
+        self.db.commit()
+        return
+
+    def get_messages(self):
+        with self.db.cursor() as c:
+            query = "select * from messages"
+            c.execute(query)
+            records = c.fetchall()
+            return records
+
+    def set_active_user(self, nom):
+        with self.db.cursor() as c:
+            query = ("update active set nom='%s' where id ='%s'" % (nom, '1'))
+            c.execute(query)
+        self.db.commit()
+
+    def unset_active_user(self):
+        with self.db.cursor() as c:
+            query = ("update active set nom='%s' where id ='%s'" % ("nouser", '1'))
+            c.execute(query)
+        self.db.commit()
+
+    def get_active_user(self):
+        with self.db.cursor() as c:
+            query = "select * from active"
+            c.execute(query)
+            records = c.fetchall()
+            return records[0][1]

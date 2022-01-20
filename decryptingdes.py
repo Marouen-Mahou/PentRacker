@@ -7,7 +7,7 @@ from Crypto.Cipher import DES3, DES
 from Crypto import Random
 
 
-class EncryptingDES(tk.Frame):
+class DecryptingDES(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -17,7 +17,7 @@ class EncryptingDES(tk.Frame):
         canvas.configure(background='black')
         canvas.grid(columnspan=3, rowspan=5)
 
-        menuText = tk.Label(self, text="DES Encrypting 1")
+        menuText = tk.Label(self, text="DES Decrypting")
         menuText.config(font=("Anonymous Pro", 30))
         menuText.config(fg="#FFFFFF")
         menuText.config(bg="black")
@@ -42,11 +42,11 @@ class EncryptingDES(tk.Frame):
 
         # Encryption button
         menu3_text = tk.StringVar()
-        menu3_btn = tk.Button(self, command=lambda: self.encrypt(output,message.get("1.0", "end-1c"), key.get("1.0", "end-1c")),
+        menu3_btn = tk.Button(self, command=lambda: self.decrypt(output, message.get("1.0", "end-1c"), key.get("1.0", "end-1c")),
                                                                  textvariable=menu3_text,
                                                                  font=("Anonymous Pro", 14), bg="#57B947", fg="black",
                                                                  width=10)
-        menu3_text.set("Encrypt")
+        menu3_text.set("Decrypt")
         menu3_btn.grid(column=2, row=2)
 
         # Quit button
@@ -56,18 +56,16 @@ class EncryptingDES(tk.Frame):
         quit_text.set("Return")
         quit_btn.grid(columnspan=3, row=4)
 
-    def encrypt(self,output, message, key):
+    def decrypt(self,output, message, key):
         key = key.encode('ascii')
         if len(key) < 16:
             key = key + str.encode((16 - len(key)) * '\x00')
         m = hashlib.md5(key)
         key = m.digest()
         (dk, iv) = (key[:8], key[8:])
-        cipher = DES.new(dk, DES.MODE_CBC, iv)
-        message += '\x00' * (8 - len(message) % 8)
-        ciphertext = cipher.encrypt(message.encode('ascii'))
-        encode_string = base64.b32encode(ciphertext)
+        decoded_string = base64.b32decode(message)
+        cipher2 = DES.new(dk, DES.MODE_CBC, iv)
+        decrypted_string = cipher2.decrypt(decoded_string)
         output.delete(1.0, "end")
-        output.insert(1.0, encode_string)
-
+        output.insert(1.0, decrypted_string)
 

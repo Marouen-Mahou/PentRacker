@@ -55,7 +55,7 @@ class HomePage(tk.Frame):
 
         #Encypt / Decrypt button
         menu6_text = tk.StringVar()
-        menu6_btn = tk.Button(self, command=lambda : print("1") , textvariable=menu6_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
+        menu6_btn = tk.Button(self, command=lambda : controller.show_frame(15) , textvariable=menu6_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
         menu6_text.set("Secure Chat")
         menu6_btn.grid(column=1,row=3)
 

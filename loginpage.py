@@ -69,7 +69,6 @@ class LoginPage(tk.Frame):
         user = dao.getuser(email.get())
         print(user[3])
         if (result):
-            print("hello")
             code = random.choice(range(100000, 999999))
             dao.update_verifcode(email.get(),code)
             send_email(code, user[3])
