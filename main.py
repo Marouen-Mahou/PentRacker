@@ -4,13 +4,14 @@ from PIL import  ImageTk, Image
 
 from dbconnection import DAO
 
-import twilio
-
 from functools import partial
 
 from decodepage import DecodePage
 from encodepage import EncodePage
+from encryptingaes import EncryptingAES
 from homepage import HomePage
+from rsa import EncDecRsa
+from gamal import EncDecGAMAL
 from loginpage import LoginPage
 from doubleFA import DoubleFA
 import hashlib
@@ -21,9 +22,17 @@ import re
 from encodingmenu import EncodingMenu
 from hashingmenu import HashingMenu
 from symencryptingmenu import SymEncryptingMenu
+from encryptingdes import EncryptingDES
+from decryptingdes import DecryptingDES
+
+from decryptingaes import DecryptingAES
+
 from asymencryptingmenu import AsymEncryptingMenu
 from crackingmenu import CrackingMenu
 from registerpage import RegisterPage
+
+from secretchat import SecretChat
+from asymsecretchat import AsymSecretChat
 
 LARGEFONT =("Verdana", 35)
 
@@ -34,7 +43,7 @@ class tkinterApp(tk.Tk):
 
         # __init__ function for class Tk
         tk.Tk.__init__(self, *args, **kwargs)
-
+        self.email= None
         ico = Image.open('logo.png')
         photo = ImageTk.PhotoImage(ico)
         self.wm_iconphoto(False, photo)
@@ -51,20 +60,18 @@ class tkinterApp(tk.Tk):
         self.resizable(False, False)
 
         # initializing frames to an empty array
-        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu, HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu, EncodePage,DecodePage,DoubleFA]
+        self.frames = [LoginPage, RegisterPage, HomePage, EncodingMenu,
+                       HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu,
+                       EncodePage,DecodePage,DoubleFA, EncryptingDES,
+                       DecryptingDES, EncryptingAES, DecryptingAES, SecretChat,
+                       EncDecRsa,EncDecGAMAL,AsymSecretChat
+                       ]
 
         # iterating through a tuple consisting
         # of the different page layouts
-
-
-
-
-            # initializing frame of that object from
-            # startpage, page1, page2 respectively with
-            # for loop
-
-
-
+        # initializing frame of that object from
+        # startpage, page1, page2 respectively with
+        # for loop
 
         self.show_frame(0)
 
@@ -74,6 +81,12 @@ class tkinterApp(tk.Tk):
         frame = self.frames[ind](self.container, self)
         frame.grid(row=0, column=0, sticky="nsew")
         frame.tkraise()
+
+    def get_email(self):
+        return self.email
+
+    def set_email(self,email):
+        self.email=email
 
 # first window frame startpage
 

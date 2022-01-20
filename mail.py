@@ -9,9 +9,8 @@ def send_email(code, email):
     recipient = email
     request = requests.post(request_url, auth=('api', key), data={
         'from': 'PENTRACKER@gmail.com',
-        'to': "benslamasouheil@gmail.com",
+        'to': email,
         'subject': 'verification code',
         'text': 'your verification code is : {0}'.format(code)})
 
 
-send_email(201, "benslamasouheil@gmail.com")
