@@ -58,6 +58,12 @@ class HomePage(tk.Frame):
         menu6_btn = tk.Button(self, command=lambda : controller.show_frame(15) , textvariable=menu6_text, font=("Anonymous Pro", 14), bg="#57B947",fg="black", width = 30)
         menu6_text.set("Secure Chat")
         menu6_btn.grid(column=1,row=3)
+        # Encypt / Decrypt button
+        menu6_text = tk.StringVar()
+        menu6_btn = tk.Button(self, command=lambda: controller.show_frame(18), textvariable=menu6_text,
+                              font=("Anonymous Pro", 14), bg="#57B947", fg="black", width=30)
+        menu6_text.set("Asym Secure Chat")
+        menu6_btn.grid(column=1, row=4)
 
         #Quit button
         quit_text = tk.StringVar()

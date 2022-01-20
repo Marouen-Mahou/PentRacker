@@ -32,6 +32,7 @@ from crackingmenu import CrackingMenu
 from registerpage import RegisterPage
 
 from secretchat import SecretChat
+from asymsecretchat import AsymSecretChat
 
 LARGEFONT =("Verdana", 35)
 
@@ -42,7 +43,7 @@ class tkinterApp(tk.Tk):
 
         # __init__ function for class Tk
         tk.Tk.__init__(self, *args, **kwargs)
-
+        self.email= None
         ico = Image.open('logo.png')
         photo = ImageTk.PhotoImage(ico)
         self.wm_iconphoto(False, photo)
@@ -63,21 +64,14 @@ class tkinterApp(tk.Tk):
                        HashingMenu, CrackingMenu, SymEncryptingMenu, AsymEncryptingMenu,
                        EncodePage,DecodePage,DoubleFA, EncryptingDES,
                        DecryptingDES, EncryptingAES, DecryptingAES, SecretChat,
-                       EncDecRsa,EncDecGAMAL
+                       EncDecRsa,EncDecGAMAL,AsymSecretChat
                        ]
 
         # iterating through a tuple consisting
         # of the different page layouts
-
-
-
-
-            # initializing frame of that object from
-            # startpage, page1, page2 respectively with
-            # for loop
-
-
-
+        # initializing frame of that object from
+        # startpage, page1, page2 respectively with
+        # for loop
 
         self.show_frame(0)
 
@@ -87,6 +81,12 @@ class tkinterApp(tk.Tk):
         frame = self.frames[ind](self.container, self)
         frame.grid(row=0, column=0, sticky="nsew")
         frame.tkraise()
+
+    def get_email(self):
+        return self.email
+
+    def set_email(self,email):
+        self.email=email
 
 # first window frame startpage
 

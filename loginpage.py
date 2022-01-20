@@ -73,7 +73,7 @@ class LoginPage(tk.Frame):
             dao.update_verifcode(email.get(),code)
             send_email(code, user[3])
             send_verif(code, user[4])
-
+            controller.set_email(user[3])
             controller.show_frame(10)
 
     def register(self, controller):
