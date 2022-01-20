@@ -72,10 +72,12 @@ class EncDecGAMAL(tk.Frame):
 
     def encrypt(self, output, message):
         cipher = elgamal.encrypt(self.elGamalKeys['publicKey'], message)
-        print(cipher)
+        output.delete("1.0", "end-1c")
+        output.insert('1.0', cipher)
     def decrypt(self, output, message):
 
         cipher=elgamal.decrypt(self.elGamalKeys['privateKey'], message)
-        print(cipher)
+        output.delete("1.0", "end-1c")
+        output.insert('1.0', cipher)
 
 
