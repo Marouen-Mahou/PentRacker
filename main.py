@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import  ImageTk, Image
+from dotenv import load_dotenv
+import os
+
 
 from dbconnection import DAO
 
@@ -35,6 +38,9 @@ from secretchat import SecretChat
 from asymsecretchat import AsymSecretChat
 
 LARGEFONT =("Verdana", 35)
+
+load_dotenv()
+
 
 class tkinterApp(tk.Tk):
 

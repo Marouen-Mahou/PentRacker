@@ -37,7 +37,7 @@ class DAO:
         # faire quelque chose d'utile avec la connexion
         with self.db.cursor() as c:
             c.execute(
-                "create table users (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL , prenom  varchar(50),email varchar(50) NOT NULL UNIQUE ,numero varchar(8) NOT NULL , password varchar(256) NOT NULL ,  code varchar(6) NOT NULL );"
+                "create table users (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL , prenom  varchar(50),email varchar(50) NOT NULL UNIQUE ,numero varchar(8) NOT NULL , password varchar(256) NOT NULL ,  code varchar(6)  );"
             )
             c.execute(
                 "create table clepubs (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL , clepub varchar(50) NOT NULL );"
@@ -50,7 +50,7 @@ class DAO:
             )
 
             c.execute(
-                "create active messages (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL );"
+                "create table active  (id  integer PRIMARY KEY AUTO_INCREMENT , nom varchar(50) NOT NULL );"
             )
             c.execute(
                 "INSERT INTO `active`(`nom`) VALUES('nouser');"
